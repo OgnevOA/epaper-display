@@ -84,6 +84,9 @@ NIGHT_START_MINUTE = 30  # 30 minutes past the hour
 MORNING_WAKE_HOUR = 6  # 6 AM
 MORNING_WAKE_MINUTE = 30 # 30 minutes past the hour
 
+current_image_bytes = None   # Will hold the bytes of the image to be served
+preloaded_xkcd_bytes = None  # Will hold the bytes of the next preloaded XKCD
+
 def restricted(func):
     @wraps(func)
     async def wrapped(update: Update, context: ContextTypes.DEFAULT_TYPE, *args, **kwargs):
@@ -302,7 +305,7 @@ def split_text_and_emojis(line):
 # 3) Photo Processing
 # --------------------------------------------------------------------
 def process_photo(image_data: bytes):
-    global image_available
+    global image_available, current_image_bytes
     try:
         with Image.open(BytesIO(image_data)) as img:
             # --- START: NEW FIX FOR TRANSPARENCY ---
@@ -352,7 +355,9 @@ def process_photo(image_data: bytes):
             y_offset = (960 - new_h) // 2 if new_h < 960 else 0
             final_img.paste(img, (0, y_offset))
 
-            final_img.save(IMAGE_FILE, "PNG", optimize=True, compress_level=9)
+            output_stream = BytesIO()
+            final_img.save(output_stream, "PNG", optimize=True, compress_level=9)
+            current_image_bytes = output_stream.getvalue()
 
         image_available = True
         logger.info("Saved compressed photo -> %s, centered with y_offset=%d", IMAGE_FILE, y_offset)
@@ -415,7 +420,7 @@ async def process_text_browser(message_text: str):
 # 5) Friends Quotes Processing
 # --------------------------------------------------------------------
 def process_friends_quote():
-    global image_available
+    global image_available, current_image_bytes
     try:
         with open(FRIENDS_QUOTES_FILE, "r", encoding="utf-8") as f:
             quotes = json.load(f)
@@ -480,7 +485,9 @@ def process_friends_quote():
         footer_y = img_height - footer_h - footer_margin
         draw.text((footer_x, footer_y), footer_text, font=font, fill=0)
         final_img = image.rotate(90, expand=True)
-        final_img.save(IMAGE_FILE, "PNG")
+        output_stream = BytesIO()
+        final_img.save(output_stream, "PNG", optimize=True, compress_level=9)
+        current_image_bytes = output_stream.getvalue()
         image_available = True
         return True
     except Exception as e:
@@ -492,6 +499,7 @@ def process_friends_quote():
 # 6) XKCD Comic Processing - Preloading & Fallback
 # --------------------------------------------------------------------
 def pre_process_photo(image_data: bytes, output_file: str):
+    global preloaded_xkcd_bytes
     try:
         with Image.open(BytesIO(image_data)) as img:
             # This logic is identical to the main process_photo function now
@@ -519,15 +527,19 @@ def pre_process_photo(image_data: bytes, output_file: str):
             y_offset = (960 - new_h) // 2 if new_h < 960 else 0
             final_img.paste(img, (0, y_offset))
 
-            final_img.save(output_file, "PNG", optimize=True, compress_level=9)
+            output_stream = BytesIO()
+            final_img.save(output_stream, "PNG", optimize=True, compress_level=9)
+            preloaded_xkcd_bytes = output_stream.getvalue()
             logger.info("Preprocessed compressed XKCD image saved to %s", output_file)
         return True
     except Exception as e:
         logger.error("Error in pre_process_photo: %s", e)
         return False
 
+
 def preload_xkcd_comic():
     global preloaded_xkcd_image_ready
+    global preloaded_xkcd_bytes
     try:
         import urllib.request
         with urllib.request.urlopen("https://xkcd.com/info.0.json") as response:
@@ -705,16 +717,25 @@ async def friends_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @restricted
 async def xkcd_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global xkcd_mode, friends_mode, preloaded_xkcd_image_ready
+    global xkcd_mode, friends_mode, preloaded_xkcd_bytes, current_image_bytes, image_available
     xkcd_mode = True
     friends_mode = False
     save_settings()
     loop = asyncio.get_event_loop()
-    if not preloaded_xkcd_image_ready:
+    if not preloaded_xkcd_bytes:
         result = await loop.run_in_executor(None, preload_xkcd_comic)
         if not result:
             await update.message.reply_text("Failed to preload XKCD comic.")
             return
+    if preloaded_xkcd_bytes:
+        # Use the preloaded image
+        current_image_bytes = preloaded_xkcd_bytes
+        image_available = True
+        await update.message.reply_text("Random XKCD comic is ready!")
+
+        # Clear the preloaded cache and start preloading the *next* one in the background
+        preloaded_xkcd_bytes = None
+        asyncio.get_event_loop().run_in_executor(None, preload_xkcd_comic)
     try:
         import shutil
         shutil.copyfile(PRELOADED_XKCD_FILE, IMAGE_FILE)
@@ -758,23 +779,21 @@ async def ws_handler(websocket, path=None):
                 if friends_mode:
                     await asyncio.get_running_loop().run_in_executor(None, process_friends_quote)
                 elif xkcd_mode:
-                    if preloaded_xkcd_image_ready:
-                        try:
-                            import shutil
-                            shutil.copyfile(PRELOADED_XKCD_FILE, IMAGE_FILE)
-                            logger.info("Using preloaded XKCD comic.")
-                            preloaded_xkcd_image_ready = False
-                            asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
-                        except Exception as e:
-                            logger.error("Error copying preloaded XKCD image: %s", e)
-                            process_xkcd_comic()
-                    else:
-                        process_xkcd_comic()
-                if os.path.exists(IMAGE_FILE):
-                    url = f"http://{SERVER_IP}:{HTTP_PORT}/{IMAGE_FILE}"
+                    if preloaded_xkcd_bytes:
+                        global current_image_bytes, image_available
+                        current_image_bytes = preloaded_xkcd_bytes
+                        image_available = True
+                        asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
+                    else:  # Fallback if nothing is preloaded
+                        await asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
+                if image_available:
+                    # The URL is now fixed since we defined the route
+                    url = f"http://{SERVER_IP}:{HTTP_PORT}/image.png"
                     reply = f"update:{url}|{dur_str}"
+                    image_available = False  # CRITICAL: Reset the flag after notifying the device
                 else:
                     reply = f"no_update|{dur_str}"
+
                 await websocket.send(reply)
                 logger.info("WS sent: %s", reply)
     except websockets.ConnectionClosed:
@@ -786,15 +805,17 @@ async def start_ws_server():
     return server
 
 async def handle_image(request):
-    if os.path.exists(IMAGE_FILE):
-        logger.info("Serving image.png to %s", request.remote)
-        return web.FileResponse(IMAGE_FILE)
+    global current_image_bytes
+    if current_image_bytes:
+        logger.info("Serving image from memory to %s", request.remote)
+        return web.Response(body=current_image_bytes, content_type='image/png')
     else:
-        return web.Response(status=404, text="Image not found")
+        logger.warning("Image requested but not available in memory.")
+        return web.Response(status=404, text="Image not available")
 
 async def start_http_server():
     app = web.Application()
-    app.router.add_get(f"/{IMAGE_FILE}", handle_image)
+    app.router.add_get("/image.png", handle_image)
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, "0.0.0.0", HTTP_PORT)
