@@ -1,0 +1,1601 @@
+{
+  "quotes": [
+    {
+      "id": 1,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "Welcome to the real world. It sucks. You're gonna love it."
+        }
+      ],
+      "season": 1,
+      "episode": 1,
+      "episode_title": "The One Where Monica Gets a Roommate"
+    },
+    {
+      "id": 2,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "Now, I need you to be careful and efficient. And remember: If I am harsh with you, it's only because you're doing it wrong."
+        }
+      ],
+      "season": 10,
+      "episode": 16,
+      "episode_title": "The One with Rachel's Going Away Party"
+    },
+    {
+      "id": 3,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "Not just clean, 'Monica clean.'"
+        }
+      ],
+      "season": 1,
+      "episode": 6,
+      "episode_title": "The One With the Butt"
+    },
+    {
+      "id": 4,
+      "dialogue": [
+        {
+          "speaker": "Rachel",
+          "text": "I’m not someone who goes after a guy five minutes after he’s divorced."
+        },
+        {
+          "speaker": "Monica",
+          "text": "No, you go after them five minutes before they get married."
+        }
+      ],
+      "season": 5,
+      "episode": 7,
+      "episode_title": "The One Where Ross Moves In"
+    },
+    {
+      "id": 5,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "Guys can fake it? Unbelievable! The one thing that's ours!"
+        }
+      ],
+      "season": 9,
+      "episode": 11,
+      "episode_title": "The One Where Rachel Goes Back to Work"
+    },
+    {
+      "id": 6,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "Is it me? Is it like I have a beacon that only dogs and men with severe emotional problems can hear?"
+        }
+      ],
+      "season": 1,
+      "episode": 1,
+      "episode_title": "The One Where Monica Gets a Roommate"
+    },
+    {
+      "id": 7,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "You can't fire me. I make your decisions and I say, 'I'm not fired.' Ha."
+        }
+      ],
+      "season": 5,
+      "episode": 2,
+      "episode_title": "The One with All the Kissing"
+    },
+    {
+      "id": 8,
+      "dialogue": [
+        {
+          "speaker": "Rachel",
+          "text": "Go tell him he's cute. What's the worst that could happen?"
+        },
+        {
+          "speaker": "Monica",
+          "text": "He could hear me."
+        }
+      ],
+      "season": 2,
+      "episode": 12,
+      "episode_title": "The One After the Superbowl"
+    },
+    {
+      "id": 9,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "If you're too afraid to be in a relationship, then don't be in one."
+        }
+      ],
+      "season": 5,
+      "episode": 15,
+      "episode_title": "The One With The Girl Who Hits Joey"
+    },
+    {
+      "id": 10,
+      "dialogue": [
+        {
+          "speaker": "Monica Geller",
+          "text": "It's never taken you more than a shower to get over a relationship."
+        }
+      ],
+      "season": 3,
+      "episode": 17,
+      "episode_title": "The One Without The Ski Trip"
+    },
+    {
+      "id": 11,
+      "dialogue": [
+        {
+          "speaker": "Monica",
+          "text": "I know of two surefire ways to shut a man up. And one of them is sex."
+        },
+        {
+          "speaker": "Rachel",
+          "text": "What’s the other one?"
+        },
+        {
+          "speaker": "Monica",
+          "text": "I don’t know. I’ve never had to use the other one."
+        }
+      ],
+      "season": 6,
+      "episode": 23,
+      "episode_title": "The One with the Ring"
+    },
+    {
+      "id": 12,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I'm not great at the advice. Can I interest you in a sarcastic comment?"
+        }
+      ],
+      "season": 8,
+      "episode": 17,
+      "episode_title": "The One with the Tea Leaves"
+    },
+    {
+      "id": 13,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I'm hopeless and awkward and desperate for love!"
+        }
+      ],
+      "season": 3,
+      "episode": 4,
+      "episode_title": "The One with the Metaphorical Tunnel"
+    },
+    {
+      "id": 14,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "So it seems like this Internet thing is here to stay."
+        }
+      ],
+      "season": 6,
+      "episode": 15,
+      "episode_title": "The One That Could Have Been: Part 1"
+    },
+    {
+      "id": 15,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "If I were a guy and... Did I just say 'if I were a guy?'"
+        }
+      ],
+      "season": 10,
+      "episode": 5,
+      "episode_title": "The One Where Rachel's Sister Babysits"
+    },
+    {
+      "id": 16,
+      "dialogue": [
+        {
+          "speaker": "Ross",
+          "text": "I went to that tanning place your wife suggested."
+        },
+        {
+          "speaker": "Chandler Bing",
+          "text": "Was that place the sun?"
+        }
+      ],
+      "season": 10,
+      "episode": 3,
+      "episode_title": "The One with Ross's Tan"
+    },
+    {
+      "id": 17,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Cheese. It’s milk that you chew."
+        }
+      ],
+      "season": 9,
+      "episode": 11,
+      "episode_title": "The One Where Rachel Goes Back to Work"
+    },
+    {
+      "id": 18,
+      "dialogue": [
+        {
+          "speaker": "Ross",
+          "text": "No, Homo habilis was erect. Australopithecus was never fully erect."
+        },
+        {
+          "speaker": "Chandler Bing",
+          "text": "Well, maybe he was nervous."
+        }
+      ],
+      "season": 2,
+      "episode": 15,
+      "episode_title": "The One Where Ross and Rachel... You Know"
+    },
+    {
+      "id": 19,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I can handle this. 'Handle' is my middle name. Actually, 'handle' is the middle of my first name."
+        }
+      ],
+      "season": 3,
+      "episode": 17,
+      "episode_title": "The One Without the Ski Trip"
+    },
+    {
+      "id": 20,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Until I was 25, I thought the response to 'I love you' was 'Oh, crap.'"
+        }
+      ],
+      "season": 8,
+      "episode": 17,
+      "episode_title": "The One With The Tea Leaves"
+    },
+    {
+      "id": 21,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I say more dumb things before 9 A.M. than most people say all day."
+        }
+      ],
+      "season": 4,
+      "episode": 16,
+      "episode_title": "The One With The Fake Party"
+    },
+    {
+      "id": 22,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I'm a gym member. I try to go four times a week, but I've missed the last twelve hundred times."
+        }
+      ],
+      "season": 4,
+      "episode": 4,
+      "episode_title": "The One with the Ballroom Dancing"
+    },
+    {
+      "id": 23,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I tend to keep talking until somebody stops me."
+        }
+      ],
+      "season": 9,
+      "episode": 11,
+      "episode_title": "The One Where Rachel Goes Back To Work"
+    },
+    {
+      "id": 24,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Oh god. Can open. Worms everywhere!"
+        }
+      ],
+      "season": 2,
+      "episode": 16,
+      "episode_title": "The One where Joey Moves Out"
+    },
+    {
+      "id": 25,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "When I first meet somebody it’s usually panic, anxiety, and a great deal of sweating."
+        }
+      ],
+      "season": 7,
+      "episode": 18,
+      "episode_title": "The One with Joey's Award"
+    },
+    {
+      "id": 26,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Alright, I took the quiz. And it turns out I do put my career before men."
+        }
+      ],
+      "season": 3,
+      "episode": 2,
+      "episode_title": "The One Where No One's Ready"
+    },
+    {
+      "id": 27,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Oh, I know. This must be so hard. ‘Oh, no! Two women love me. They’re both gorgeous and sexy. My wallet’s too small for my fifties, and my diamond shoes are too tight!'"
+        }
+      ],
+      "season": 2,
+      "episode": 8,
+      "episode_title": "The One with the List"
+    },
+    {
+      "id": 28,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Oh, man. In my next life, I’m coming back as a toilet brush!"
+        }
+      ],
+      "season": 1,
+      "episode": 14,
+      "episode_title": "The One with the Candy Hearts"
+    },
+    {
+      "id": 29,
+      "dialogue": [
+        {
+          "speaker": "Rachel",
+          "text": "Hey, I cook!"
+        },
+        {
+          "speaker": "Chandler Bing",
+          "text": "Offering people gum is not cooking."
+        }
+      ],
+      "season": 6,
+      "episode": 9,
+      "episode_title": "The One Where Ross Got High"
+    },
+    {
+      "id": 30,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "You're a door. You only like knock-knock jokes."
+        }
+      ],
+      "season": 9,
+      "episode": 6,
+      "episode_title": "The One with the Male Nanny"
+    },
+    {
+      "id": 31,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "Hi, I'm Chandler. I make jokes when I'm uncomfortable."
+        }
+      ],
+      "season": 6,
+      "episode": 24,
+      "episode_title": "The One With The Proposal"
+    },
+    {
+      "id": 32,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "This parachute is a knapsack!"
+        }
+      ],
+      "season": 1,
+      "episode": 23,
+      "episode_title": "The One With The Birth"
+    },
+    {
+      "id": 33,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "What must it be like not to be crippled by fear and self-loathing?"
+        }
+      ],
+      "season": 10,
+      "episode": 3,
+      "episode_title": "The One with Ross's Tan"
+    },
+    {
+      "id": 34,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "It’s always better to lie than to have the complicated discussion."
+        }
+      ],
+      "season": 9,
+      "episode": 9,
+      "episode_title": "The One with Rachel's Phone Number"
+    },
+    {
+      "id": 35,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I’m glad we’re having a rehearsal dinner, I rarely practice my meals before I eat."
+        }
+      ],
+      "season": 10,
+      "episode": 12,
+      "episode_title": "The One with Phoebe's Wedding"
+    },
+    {
+      "id": 36,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "If you’re not careful, you might not get married at all this year."
+        }
+      ],
+      "recipient": "Ross",
+      "season": 6,
+      "episode": 24,
+      "episode_title": "The One with the Proposal: Part 1"
+    },
+    {
+      "id": 37,
+      "dialogue": [
+        {
+          "speaker": "Chandler Bing",
+          "text": "I think I can safely say that we all have family issues, work, and/or are sick."
+        }
+      ],
+      "season": 9,
+      "episode": 22,
+      "episode_title": "The One With the Donor"
+    },
+    {
+      "id": 38,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Oh you like that? You should hear my phone number."
+        }
+      ],
+      "season": 7,
+      "episode": 4,
+      "episode_title": "The One with Rachel's Assistant"
+    },
+    {
+      "id": 39,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Come on, Ross, you’re a paleontologist. Dig a little deeper."
+        }
+      ],
+      "season": 6,
+      "episode": 23,
+      "episode_title": "The One with the Ring"
+    },
+    {
+      "id": 40,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Well, if she isn’t (dead), cremating her was a big mistake."
+        }
+      ],
+      "season": 5,
+      "episode": 13,
+      "episode_title": "The One with Joey's Bag"
+    },
+    {
+      "id": 41,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "I’m a pacifist. But when the revolution comes, I’ll destroy all of you."
+        }
+      ],
+      "season": 5,
+      "episode": 20,
+      "episode_title": "The One with the Ride Along"
+    },
+    {
+      "id": 42,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "13 bathrooms in this place, I threw up in a coat closet."
+        }
+      ],
+      "season": 9,
+      "episode": 7,
+      "episode_title": "The One With Ross's Inappropriate Song"
+    },
+    {
+      "id": 43,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "It's so exhausting, waiting for death."
+        }
+      ],
+      "season": 6,
+      "episode": 4,
+      "episode_title": "The One Where Joey Loses His Insurance"
+    },
+    {
+      "id": 44,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Oh, my God, a woman flirting with a single man? We must alert the church elders!"
+        }
+      ],
+      "season": 8,
+      "episode": 21,
+      "episode_title": "The One with the Cooking Class"
+    },
+    {
+      "id": 45,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "This is the nicest kitchen... The refrigerator told me to have a great day."
+        }
+      ],
+      "season": 3,
+      "episode": 23,
+      "episode_title": "The One with Ross's Thing"
+    },
+    {
+      "id": 46,
+      "dialogue": [
+        {
+          "speaker": "Monica",
+          "text": "Do you have a plan?"
+        },
+        {
+          "speaker": "Phoebe",
+          "text": "I don't even have a 'pla.'"
+        }
+      ],
+      "season": 1,
+      "episode": 4,
+      "episode_title": "The One with George Stephanopoulos"
+    },
+    {
+      "id": 47,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Something is wrong with the left phalange."
+        }
+      ],
+      "season": 10,
+      "episode": 17,
+      "episode_title": "The Last One: Part 1"
+    },
+    {
+      "id": 48,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Didn’t you ever run so fast you thought your legs were gonna fall off, you know, like when you were running toward the swings or running away from Satan?"
+        }
+      ],
+      "season": 6,
+      "episode": 7,
+      "episode_title": "The One Where Phoebe Runs"
+    },
+    {
+      "id": 49,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "They don't know that we know they know we know."
+        }
+      ],
+      "season": 5,
+      "episode": 14,
+      "episode_title": "The One Where Everybody Finds Out"
+    },
+    {
+      "id": 50,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Princess Consuela Bananahammock."
+        }
+      ],
+      "season": 10,
+      "episode": 14,
+      "episode_title": "The One with Princess Consuela"
+    },
+    {
+      "id": 51,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "I am against innocent trees being cut down in their prime and their corpses grotesquely dressed in, like, tinsel and twinkly lights."
+        }
+      ],
+      "season": 3,
+      "episode": 10,
+      "episode_title": "The One Where Rachel Quits"
+    },
+    {
+      "id": 52,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Everybody looks so happy. I hate that."
+        }
+      ],
+      "season": 1,
+      "episode": 10,
+      "episode_title": "The One With the Monkey"
+    },
+    {
+      "id": 53,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "I’m very wise, I know."
+        }
+      ],
+      "season": 7,
+      "episode": 11,
+      "episode_title": "The One with All the Cheesecakes"
+    },
+    {
+      "id": 54,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "You love divorce so much, you’re probably gonna marry it — and then it won’t work out, so you’re gonna have to divorce it."
+        }
+      ],
+      "season": 4,
+      "episode": 15,
+      "episode_title": "The One with All the Rugby"
+    },
+    {
+      "id": 55,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "See? He's her lobster!"
+        }
+      ],
+      "season": 2,
+      "episode": 14,
+      "episode_title": "The One with the Prom Video"
+    },
+    {
+      "id": 56,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "You should see me when I actually... Oh actually, no, I look good."
+        }
+      ],
+      "season": 9,
+      "episode": 6,
+      "episode_title": "The One with the Male Nanny"
+    },
+    {
+      "id": 57,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "I think the most romantic song is the one that Elton John wrote for that guy from ‘Who’s the Boss?’… You know, ‘Hold me closer, Tony Danza.’"
+        }
+      ],
+      "season": 3,
+      "episode": 1,
+      "episode_title": "The One with the Princess Leia Fantasy"
+    },
+    {
+      "id": 58,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "I wish I could, but I don't want to."
+        }
+      ],
+      "season": 1,
+      "episode": 1,
+      "episode_title": "The One Where Monica Gets a Roommate"
+    },
+    {
+      "id": 59,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "I’m a lady, Monica. I don’t kiss and tell. But this hickey speaks for itself."
+        }
+      ],
+      "season": 7,
+      "episode": 18,
+      "episode_title": "The One with Joey's Award"
+    },
+    {
+      "id": 60,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Are you in there, little fetus? In nine months, will you greet us? I will... buy you some Adidas."
+        }
+      ],
+      "season": 4,
+      "episode": 12,
+      "episode_title": "The One with the Embryos"
+    },
+    {
+      "id": 61,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "If you want to receive emails about my upcoming shows, please give me money so I can buy a computer."
+        }
+      ],
+      "season": 6,
+      "episode": 3,
+      "episode_title": "The One with Ross's Denial"
+    },
+    {
+      "id": 62,
+      "dialogue": [
+        {
+          "speaker": "Phoebe Buffay",
+          "text": "Smelly cat, smelly cat, what are they feeding you? Smelly cat, smelly cat, it’s not your fault."
+        }
+      ],
+      "season": 2,
+      "episode": 6,
+      "episode_title": "The One with the Baby on the Bus"
+    },
+    {
+      "id": 63,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Isn't that just kick-you-in-the-crotch, spit-on-your-neck fantastic?"
+        }
+      ],
+      "season": 2,
+      "episode": 1,
+      "episode_title": "The One with Ross's New Girlfriend"
+    },
+    {
+      "id": 64,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "know? Why do they have to become people?"
+        }
+      ],
+      "season": 1,
+      "episode": 13,
+      "episode_title": "The One With The Boobies"
+    },
+    {
+      "id": 65,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "We are dessert stealers. We are living outside the law."
+        }
+      ],
+      "season": 7,
+      "episode": 11,
+      "episode_title": "The One with All the Cheesecakes"
+    },
+    {
+      "id": 66,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "That’s a great story. Tell it while you’re getting me some iced tea."
+        }
+      ],
+      "season": 8,
+      "episode": 22,
+      "episode_title": "The One Where Rachel Is Late"
+    },
+    {
+      "id": 67,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "He's so pretty, I want to cry."
+        }
+      ],
+      "season": 7,
+      "episode": 4,
+      "episode_title": "The One With Rachel's Assistant"
+    },
+    {
+      "id": 68,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Oh my God. I’ve become my father. I’ve been trying so hard not to become my mother, I didn’t see this coming."
+        }
+      ],
+      "season": 7,
+      "episode": 3,
+      "episode_title": "The One with Phoebe's Cookies"
+    },
+    {
+      "id": 69,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "How long do cats live? Like assuming you don’t throw ‘em under a bus or something?"
+        }
+      ],
+      "season": 2,
+      "episode": 7,
+      "episode_title": "The One Where Ross Finds Out"
+    },
+    {
+      "id": 70,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "It’s like all my life everyone’s told me, ‘You’re a shoe! You’re a shoe! You’re a shoe!’ Well, what if I don’t want to be a shoe? What if I wanna be a purse or a hat?"
+        }
+      ],
+      "season": 1,
+      "episode": 1,
+      "episode_title": "The One Where Monica Gets a Roommate"
+    },
+    {
+      "id": 71,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "No uterus, no opinion."
+        }
+      ],
+      "season": 8,
+      "episode": 14,
+      "episode_title": "The One with the Secret Closet"
+    },
+    {
+      "id": 72,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Today, it’s like there’s rock bottom, then 50 feet of crap, then me."
+        }
+      ],
+      "season": 2,
+      "episode": 1,
+      "episode_title": "The One With Ross's New Girlfriend"
+    },
+    {
+      "id": 73,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Does this look like something the girlfriend of a paleontologist would wear?"
+        }
+      ],
+      "season": 3,
+      "episode": 2,
+      "episode_title": "The One Where No One's Ready"
+    },
+    {
+      "id": 74,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Ross! We broke up two years ago. You’ve been married since then. I think it’s okay that we see other people."
+        }
+      ],
+      "season": 5,
+      "episode": 19,
+      "episode_title": "The One Where Ross Can't Flirt"
+    },
+    {
+      "id": 75,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Oh I'm sorry, did my back hurt your knife?"
+        }
+      ],
+      "season": 2,
+      "episode": 2,
+      "episode_title": "The One with the Breast Milk"
+    },
+    {
+      "id": 76,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "You know what? I just shouldn’t be allowed to make decisions anymore."
+        }
+      ],
+      "season": 5,
+      "episode": 2,
+      "episode_title": "The One with All the Kissing"
+    },
+    {
+      "id": 77,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "I’m gonna go get one of those job things."
+        }
+      ],
+      "season": 1,
+      "episode": 13,
+      "episode_title": "The One With The Boobies"
+    },
+    {
+      "id": 78,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Isn’t this exciting! I earned this! I wiped tables for it, I steamed milk for it, and it was totally… not worth it. Who’s FICA? Why’s he getting all my money?"
+        }
+      ],
+      "season": 1,
+      "episode": 4,
+      "episode_title": "The One with George Stephanopoulos"
+    },
+    {
+      "id": 79,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "I hope it's still funny when you're in hell."
+        }
+      ],
+      "season": 3,
+      "episode": 8,
+      "episode_title": "The One With The Giant Poking Device"
+    },
+    {
+      "id": 80,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Hey, what do you think is a better excuse for why I’m not drinking on this date tonight: I’m a recovering alcoholic, I’m a Mormon, or I got so hammered last night I’m still a little drunk?"
+        }
+      ],
+      "season": 8,
+      "episode": 5,
+      "episode_title": "The One with Rachel's Date"
+    },
+    {
+      "id": 81,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Oh, that's okay, girls tend to not like me."
+        }
+      ],
+      "season": 10,
+      "episode": 2,
+      "episode_title": "The One Where Ross Is Fine"
+    },
+    {
+      "id": 82,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Oh, are you setting Ross up with someone? Does she have a wedding dress?"
+        }
+      ],
+      "season": 6,
+      "episode": 8,
+      "episode_title": "The One with Ross' Teeth"
+    },
+    {
+      "id": 83,
+      "dialogue": [
+        {
+          "speaker": "Rachel Green",
+          "text": "Well, maybe I don’t need your money. Wait, wait! I said, ‘Maybe.'"
+        }
+      ],
+      "season": 1,
+      "episode": 1,
+      "episode_title": "The One Where Monica Gets a Roommate"
+    },
+    {
+      "id": 84,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Food? Oh, give me."
+        }
+      ],
+      "season": 7,
+      "episode": 17,
+      "episode_title": "The One with the Cheap Wedding Dress"
+    },
+    {
+      "id": 85,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "These are just feelings. They’ll go away."
+        }
+      ],
+      "season": 8,
+      "episode": 16,
+      "episode_title": "The One Where Joey Tells Rachel"
+    },
+    {
+      "id": 86,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Here come the meat sweats."
+        }
+      ],
+      "season": 8,
+      "episode": 9,
+      "episode_title": "The One With the Rumor"
+    },
+    {
+      "id": 87,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "I look a woman up and down and say, 'How you doin?'"
+        }
+      ],
+      "season": 4,
+      "episode": 13,
+      "episode_title": "The One with Rachel's Crush"
+    },
+    {
+      "id": 88,
+      "dialogue": [
+        {
+          "speaker": "Joey",
+          "text": "Hey, Ross, I got a science question: If the Homo sapiens were, in fact, HOMO sapiens...is that why they're extinct?"
+        },
+        {
+          "speaker": "Ross",
+          "text": "Joey, Homo sapiens are PEOPLE."
+        },
+        {
+          "speaker": "Joey",
+          "text": "Hey, I'm not judging!"
+        }
+      ],
+      "season": 3,
+      "episode": 8,
+      "episode_title": "The One With The Giant Poking Device"
+    },
+    {
+      "id": 89,
+      "dialogue": [
+        {
+          "speaker": "Joey",
+          "text": "If he doesn’t like you, this is all a moo point."
+        },
+        {
+          "speaker": "Rachel",
+          "text": "A moo point?"
+        },
+        {
+          "speaker": "Joey",
+          "text": "Yeah. It’s like a cow’s opinion. It just doesn’t matter. It’s moo."
+        }
+      ],
+      "season": 7,
+      "episode": 8,
+      "episode_title": "The One Where Chandler Doesn't Like Dogs"
+    },
+    {
+      "id": 90,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Well, the fridge broke, so I had to eat everything."
+        }
+      ],
+      "season": 6,
+      "episode": 19,
+      "episode_title": "The One With Joey's Fridge"
+    },
+    {
+      "id": 91,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Over the line? You’re so far past the line that you can’t even see the line! The line is a dot to you!"
+        }
+      ],
+      "season": 4,
+      "episode": 7,
+      "episode_title": "The One Where Chandler Crosses the Line"
+    },
+    {
+      "id": 92,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "You can’t just give up! Is that what a dinosaur would do?"
+        }
+      ],
+      "season": 10,
+      "episode": 17,
+      "episode_title": "The Last One"
+    },
+    {
+      "id": 93,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "You don’t own a TV? What’s all your furniture pointed at?"
+        }
+      ],
+      "season": 9,
+      "episode": 23,
+      "episode_title": "The One in Barbados: Part 1"
+    },
+    {
+      "id": 94,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "I like it. What’s not to like? Custard? Good. Jam? Good. Meat? Good."
+        }
+      ],
+      "season": 6,
+      "episode": 9,
+      "episode_title": "The One Where Ross Got High"
+    },
+    {
+      "id": 95,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Okay. So I’m out four thousand dollars and nobody’s boobs are getting any bigger?"
+        }
+      ],
+      "season": 9,
+      "episode": 16,
+      "episode_title": "The One With The Boob Job"
+    },
+    {
+      "id": 96,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Look at me! I’m Chandler! Could I be wearing any more clothes?"
+        }
+      ],
+      "season": 3,
+      "episode": 2,
+      "episode_title": "The One Where No One's Ready"
+    },
+    {
+      "id": 97,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "That’s right, I stepped up! She’s my friend and she needed help. If I had to, I’d pee on any one of you!"
+        }
+      ],
+      "season": 4,
+      "episode": 1,
+      "episode_title": "The One with the Jellyfish"
+    },
+    {
+      "id": 98,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "How you doin’?"
+        }
+      ],
+      "season": null,
+      "episode": null,
+      "episode_title": "Multiple Episodes"
+    },
+    {
+      "id": 99,
+      "dialogue": [
+        {
+          "speaker": "Joey Tribbiani",
+          "text": "Man, I’m starving. What was I thinking at dinner? ‘Do you want soup or salad?’ Both. Always order both."
+        }
+      ],
+      "season": 7,
+      "episode": 12,
+      "episode_title": "The One Where They're Up All Night"
+    },
+    {
+      "id": 100,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Ah, humor based on my pain. Ah, ha, ha."
+        }
+      ],
+      "season": 6,
+      "episode": 17,
+      "episode_title": "The One With the Unagi"
+    },
+    {
+      "id": 101,
+      "dialogue": [
+        {
+          "speaker": "Ross",
+          "text": "My marriage, I think my marriage is kind of over."
+        },
+        {
+          "speaker": "Phoebe",
+          "text": "Why?"
+        },
+        {
+          "speaker": "Ross",
+          "text": "Because my wife's a lesbian... And I'm not one."
+        }
+      ],
+      "season": 3,
+      "episode": 6,
+      "episode_title": "The One with the Flashback"
+    },
+    {
+      "id": 102,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Look, it's the artist formerly known as Chandler."
+        }
+      ],
+      "season": 2,
+      "episode": 20,
+      "episode_title": "The One Where Old Yeller Dies"
+    },
+    {
+      "id": 103,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "You-you-you... You threw my sandwich away... My sandwich? MY SANDWICH?!!"
+        }
+      ],
+      "season": 5,
+      "episode": 9,
+      "episode_title": "The One with Ross's Sandwich"
+    },
+    {
+      "id": 104,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Unagi is a total state of awareness."
+        }
+      ],
+      "season": 6,
+      "episode": 17,
+      "episode_title": "The One With the Unagi"
+    },
+    {
+      "id": 105,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "I tell you, when I actually die, some people are gonna get seriously haunted."
+        }
+      ],
+      "season": 9,
+      "episode": 17,
+      "episode_title": "The One With the Memorial Service"
+    },
+    {
+      "id": 106,
+      "dialogue": [
+        {
+          "speaker": "Ross",
+          "text": "Rach, you balded my girlfriend!"
+        },
+        {
+          "speaker": "Rachel",
+          "text": "See, she doesn't look that bad."
+        },
+        {
+          "speaker": "Ross",
+          "text": "You can see the moonlight bouncing off her head!"
+        }
+      ],
+      "season": 3,
+      "episode": 25,
+      "episode_title": "The One at the Beach"
+    },
+    {
+      "id": 107,
+      "dialogue": [
+        {
+          "speaker": "Ross",
+          "text": "How about the time I cut the legs off your Malibu Ken?"
+        },
+        {
+          "speaker": "Monica",
+          "text": "That was you?"
+        },
+        {
+          "speaker": "Ross",
+          "text": "Uh... They were infected. He wouldn't have made it."
+        }
+      ],
+      "season": 2,
+      "episode": 6,
+      "episode_title": "The One with the Baby on the Bus"
+    },
+    {
+      "id": 108,
+      "dialogue": [
+        {
+          "speaker": "Joey",
+          "text": "Ross! How much do you weigh?"
+        },
+        {
+          "speaker": "Ross",
+          "text": "I'd really rather not answer that, right now. I'm still carrying a little holiday weight."
+        }
+      ],
+      "season": 7,
+      "episode": 12,
+      "episode_title": "The One Where They're Up All Night"
+    },
+    {
+      "id": 109,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "I grew up in a house with Monica, OK. If you didn't eat fast, you didn't eat."
+        }
+      ],
+      "season": 8,
+      "episode": 3,
+      "episode_title": "The One Where Rachel Tells..."
+    },
+    {
+      "id": 110,
+      "dialogue": [
+        {
+          "speaker": "Monica",
+          "text": "Where have you been?"
+        },
+        {
+          "speaker": "Ross",
+          "text": "Emotional hell."
+        }
+      ],
+      "season": 2,
+      "episode": 14,
+      "episode_title": "The One with the Prom Video"
+    },
+    {
+      "id": 111,
+      "dialogue": [
+        {
+          "speaker": "Rachel",
+          "text": "Maybe we should take a break."
+        },
+        {
+          "speaker": "Ross",
+          "text": "You're right. Let's cool off, get some frozen yogurt."
+        },
+        {
+          "speaker": "Rachel",
+          "text": "No, a break from us."
+        }
+      ],
+      "season": 3,
+      "episode": 16,
+      "episode_title": "The One with the Morning After"
+    },
+    {
+      "id": 112,
+      "dialogue": [
+        {
+          "speaker": "Ross",
+          "text": "Well, wait a minute, why is she in the title?"
+        },
+        {
+          "speaker": "Susan",
+          "text": "It's my baby too."
+        },
+        {
+          "speaker": "Ross",
+          "text": "Um, excuse me; I don't remember you making any sperm."
+        }
+      ],
+      "season": 1,
+      "episode": 2,
+      "episode_title": "The One with the Sonogram at the End"
+    },
+    {
+      "id": 113,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Y'know what? I'm gonna go out on a limb and say no divorces in '99!"
+        }
+      ],
+      "season": 5,
+      "episode": 11,
+      "episode_title": "The One with All the Resolutions"
+    },
+    {
+      "id": 114,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "I am this close to tugging on my testicles again."
+        }
+      ],
+      "season": 10,
+      "episode": 4,
+      "episode_title": "The One With the Cake"
+    },
+    {
+      "id": 115,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "You and those vegetables have, uh... real thing going, huh?"
+        }
+      ],
+      "season": 5,
+      "episode": 19,
+      "episode_title": "The One Where Ross Can't Flirt"
+    },
+    {
+      "id": 116,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Only by achieving true unagi can you be prepared for any danger that may befall you."
+        }
+      ],
+      "season": 6,
+      "episode": 17,
+      "episode_title": "The One With the Unagi"
+    },
+    {
+      "id": 117,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "We were on a break!"
+        }
+      ],
+      "season": 3,
+      "episode": 15,
+      "episode_title": "The One Where Ross And Rachel Take A Break"
+    },
+    {
+      "id": 118,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "You’re over me? When were you... under me?"
+        }
+      ],
+      "season": 2,
+      "episode": 7,
+      "episode_title": "The One Where Ross Finds Out"
+    },
+    {
+      "id": 119,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Brussels sprouts? That’s worse than no food."
+        }
+      ],
+      "season": 10,
+      "episode": 8,
+      "episode_title": "The One with the Late Thanksgiving"
+    },
+    {
+      "id": 120,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Pivot! Pivot! Pivot!"
+        }
+      ],
+      "season": 5,
+      "episode": 16,
+      "episode_title": "The One with the Cop"
+    },
+    {
+      "id": 121,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "In Vegas. I was so drunk, I could've married Joey."
+        }
+      ],
+      "season": 6,
+      "episode": 2,
+      "episode_title": "The One Where Ross Hugs Rachel"
+    },
+    {
+      "id": 122,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "I'm the holiday armadillo!"
+        }
+      ],
+      "season": 7,
+      "episode": 10,
+      "episode_title": "The One with the Holiday Armadillo"
+    },
+    {
+      "id": 123,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "Get off my sister!"
+        }
+      ],
+      "season": 5,
+      "episode": 14,
+      "episode_title": "The One Where Everybody Finds Out"
+    },
+    {
+      "id": 124,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "I hope everyone likes Mexican food because I’m making FAJITAS!"
+        }
+      ],
+      "season": 10,
+      "episode": 2,
+      "episode_title": "The One Where Ross Is Fine"
+    },
+    {
+      "id": 125,
+      "dialogue": [
+        {
+          "speaker": "Ross Geller",
+          "text": "A no-sex pact, huh? I seem to have one of those going with every woman in America."
+        }
+      ],
+      "season": 7,
+      "episode": 19,
+      "episode_title": "The One With Ross And Monica's Cousin"
+    }
+  ]
+}
