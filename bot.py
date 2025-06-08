@@ -42,7 +42,7 @@ from telegram.ext import (
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-TELEGRAM_TOKEN = "7898857647:AAELXlSizfdHSy18HzB8mefRgbEYl4xHwCc"  # Replace with your token
+TELEGRAM_TOKEN = "token"  # Replace with your token
 
 SERVER_IP = "192.168.1.231"  # The IP address your M5Paper can access
 
