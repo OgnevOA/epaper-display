@@ -843,8 +843,21 @@ async def start_http_server():
 async def post_init(application: Application) -> None:
     """
     This function is called after the Application is built.
-    It starts the HTTP and WebSocket servers as background tasks.
+    It sets the bot commands and starts the HTTP/WebSocket servers.
     """
+    # Define the commands the bot will have
+    commands = [
+        BotCommand("start", "Show welcome message"),
+        BotCommand("help", "Show help message"),
+        BotCommand("settings", "Set update interval"),
+        BotCommand("friends", "Random Friends quote"),
+        BotCommand("xkcd", "Random XKCD comic"),
+    ]
+    # Set the commands for the bot
+    await application.bot.set_my_commands(commands)
+    logger.info("Successfully set bot commands.")
+
+    # Start the other servers as background tasks
     await start_http_server()
     await start_ws_server()
     logger.info("HTTP and WebSocket servers are running in the background.")
@@ -854,25 +867,16 @@ def main() -> None:
     """Run the bot."""
     load_settings()
 
-    # --- Create the Application and pass it the bot's token. ---
+    # Create the Application and pass it the bot's token.
+    # The post_init hook will handle all async setup.
     application = (
         Application.builder()
         .token(TELEGRAM_TOKEN)
-        .post_init(post_init)  # <-- This hooks in our server startup function
+        .post_init(post_init)
         .build()
     )
 
-    # --- Register all your command and message handlers ---
-    commands = [
-        BotCommand("start", "Show welcome message"),
-        BotCommand("help", "Show help message"),
-        BotCommand("settings", "Set update interval"),
-        BotCommand("friends", "Random Friends quote"),
-        BotCommand("xkcd", "Random XKCD comic"),
-    ]
-    # We need a new event loop to run the async set_my_commands
-    asyncio.run(application.bot.set_my_commands(commands))
-
+    # Register all your command and message handlers (this part is unchanged)
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("chatid", chatid_command))
@@ -883,12 +887,13 @@ def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
     application.add_handler(CallbackQueryHandler(duration_callback))
 
-    # --- Run the bot until the user presses Ctrl-C ---
-    # This will now correctly handle signals because it's in the main thread.
+    # Run the bot until the user presses Ctrl-C
+    # This will create and manage the one and only event loop.
     logger.info("Starting Telegram bot polling...")
     application.run_polling()
 
     logger.info("Bot has been stopped.")
+
 
 
 if __name__ == '__main__':
