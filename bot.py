@@ -458,7 +458,7 @@ def process_friends_quote():
             current_line = words[0]
             for w2 in words[1:]:
                 test_line = current_line + " " + w2
-                if draw.textsize(test_line, font=font)[0] <= max_width:
+                if draw.textlength(test_line, font=font) <= max_width:
                     current_line = test_line
                 else:
                     lines.append(current_line)
@@ -466,12 +466,16 @@ def process_friends_quote():
             lines.append(current_line)
             return lines
         max_text_width = img_width - 60
-        line_height = draw.textsize("Ay", font=font)[1]
+        # Get the bounding box for the text. It returns (left, top, right, bottom)
+        bbox = draw.textbbox((0, 0), "Ay", font=font)
+        line_height = bbox[3] - bbox[1]  # height = bottom - top
         wrapped_dialogue = []
         for line in dialogue_lines:
             w_lines = wrap_text(line, font, max_text_width, draw)
             wrapped_dialogue.extend(w_lines)
-        footer_w, footer_h = draw.textsize(footer_text, font=font)
+        bbox = draw.textbbox((0, 0), footer_text, font=font)
+        footer_w = bbox[2] - bbox[0]  # width = right - left
+        footer_h = bbox[3] - bbox[1]  # height = bottom - top
         dialogue_block_height = len(wrapped_dialogue) * line_height
         footer_margin = 20
         available_height = img_height - footer_h - footer_margin
