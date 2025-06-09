@@ -806,13 +806,22 @@ async def start_http_server():
     await site.start()
     logger.info("HTTP server on port %d, serving /%s", HTTP_PORT, IMAGE_FILE)
 
+
 # --------------------------------------------------------------------
-# 7) Telegram Bot Thread
+# 8) Main Async Entry
 # --------------------------------------------------------------------
-def run_telegram_bot():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+async def main():
+    # --- Load settings and start your web/websocket servers (no changes here) ---
+    load_settings()
+    await start_http_server()
+    await start_ws_server()
+
+    # --- NEW: Set up and run the Telegram Bot within the main asyncio loop ---
+
+    # 1. Create the Application instance
     application = Application.builder().token(TELEGRAM_TOKEN).build()
+
+    # 2. Define the bot commands
     commands = [
         BotCommand("start", "Show welcome message"),
         BotCommand("help", "Show help message"),
@@ -820,7 +829,8 @@ def run_telegram_bot():
         BotCommand("friends", "Random Friends quote"),
         BotCommand("xkcd", "Random XKCD comic"),
     ]
-    loop.run_until_complete(application.bot.set_my_commands(commands))
+
+    # 3. Add all your handlers to the application
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("chatid", chatid_command))
@@ -830,20 +840,30 @@ def run_telegram_bot():
     application.add_handler(MessageHandler(filters.PHOTO, photo_handler))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
     application.add_handler(CallbackQueryHandler(duration_callback))
-    logger.info("Starting Telegram bot polling...")
-    loop.run_until_complete(application.run_polling())
 
-# --------------------------------------------------------------------
-# 8) Main Async Entry
-# --------------------------------------------------------------------
-async def main():
-    load_settings()
-    await start_http_server()
-    await start_ws_server()
-    bot_thread = Thread(target=run_telegram_bot, daemon=True)
-    bot_thread.start()
-    logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
+    # 4. Initialize the application and start the background tasks
+    # This prepares the bot but doesn't block
+    await application.initialize()
+    await application.bot.set_my_commands(commands)
+    await application.start()
+    await application.updater.start_polling()
+
+    logger.info("Server and Bot are up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
+
+    # 5. Keep the main function alive forever (or until a signal is received)
     await asyncio.Event().wait()
+
+    # 6. Add a graceful shutdown for the bot (this will be called on Ctrl+C)
+    await application.updater.stop()
+    await application.stop()
+    await application.shutdown()
+
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit):
+        logger.info("Shutting down gracefully.")
 
 if __name__ == '__main__':
     try:
