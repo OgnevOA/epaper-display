@@ -42,9 +42,15 @@ from telegram.ext import (
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-TELEGRAM_TOKEN = "token"  # Replace with your token
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+if not TELEGRAM_TOKEN:
+    raise ValueError("No TELEGRAM_TOKEN set for the bot. Please set the environment variable.")
 
-SERVER_IP = "192.168.1.231"  # The IP address your M5Paper can access
+SERVER_IP = os.getenv("SERVER_IP")
+if not SERVER_IP:
+    # This will stop the script if the IP is not provided, preventing confusing errors later.
+    raise ValueError("The SERVER_IP environment variable is not set!")
+
 
 HTTP_PORT = 8000
 WS_PORT = 8765
