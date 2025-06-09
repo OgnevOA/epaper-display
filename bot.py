@@ -855,48 +855,39 @@ async def start_http_server():
 # 8) Main Async Entry
 # --------------------------------------------------------------------
 async def main():
-    # Load settings first
     load_settings()
 
-    # --- Setup the Telegram Application ---
-    # We do this directly in main now.
-    application = Application.builder().token(TELEGRAM_TOKEN).build()
-    commands = [
-        BotCommand("start", "Show welcome message"),
-        BotCommand("help", "Show help message"),
-        BotCommand("settings", "Set update interval"),
-        BotCommand("friends", "Random Friends quote"),
-        BotCommand("xkcd", "Random XKCD comic"),
-    ]
+    # The modern v20+ way to drop pending updates is in the builder.
+    application = Application.builder().token(TELEGRAM_TOKEN).drop_pending_updates(True).build()
+
     # Add all your handlers
     application.add_handler(CommandHandler("start", start_command))
-    application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(CommandHandler("chatid", chatid_command))
-    application.add_handler(CommandHandler("settings", settings_command))
-    application.add_handler(CommandHandler("friends", friends_command))
-    application.add_handler(CommandHandler("xkcd", xkcd_command))
-    application.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
+    # ... (all your other handlers)
     application.add_handler(CallbackQueryHandler(duration_callback))
 
-    # --- Start all services concurrently ---
-    # This is the magic of asyncio. We initialize everything and then run it all at once.
     try:
         logger.info("Starting all services...")
-        await application.initialize()  # Initialize the bot
-        await start_http_server()       # Start your HTTP server
-        await start_ws_server()         # Start your WebSocket server
-        await application.bot.set_my_commands(commands) # Set bot commands
-        await application.start(drop_pending_updates=True)       # Start polling for bot updates
+        await application.initialize()
+        await start_http_server()
+        await start_ws_server()
+        commands = [
+            BotCommand("start", "Show welcome message"),
+            # ... your other commands ...
+        ]
+        await application.bot.set_my_commands(commands)
+
+        # Start the application's internal tasks
+        await application.start()
 
         logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
-        # This will keep the main function alive indefinitely
         await asyncio.Event().wait()
 
     finally:
         logger.info("Shutting down application...")
-        await application.stop()
-        await application.shutdown()
+        if application.running:
+            await application.stop()
+        if application.initialized:
+            await application.shutdown()
 
 if __name__ == '__main__':
     try:
