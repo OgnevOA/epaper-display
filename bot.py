@@ -850,6 +850,7 @@ async def start_http_server():
 #     logger.info("Starting Telegram bot polling...")
 #     loop.run_until_complete(application.run_polling(shutdown_signals=None))
 
+
 # --------------------------------------------------------------------
 # 8) Main Async Entry
 # --------------------------------------------------------------------
@@ -886,7 +887,7 @@ async def main():
         await start_http_server()       # Start your HTTP server
         await start_ws_server()         # Start your WebSocket server
         await application.bot.set_my_commands(commands) # Set bot commands
-        await application.start()       # Start polling for bot updates
+        await application.start(drop_pending_updates=True)       # Start polling for bot updates
 
         logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
         # This will keep the main function alive indefinitely
