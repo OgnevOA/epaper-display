@@ -1,42 +1,22 @@
-# Use an official Python image for ARM64v8 (Raspberry Pi 4)
-FROM python:3.10-slim-bullseye
+# Step 1: Use the official, pre-configured Playwright image.
+# It's multi-arch, so it works on your Orange Pi (ARM64) and your PC (AMD64).
+FROM mcr.microsoft.com/playwright/python:v1.44.0-jammy
 
-# Set the working directory inside the container
+# Step 2: Set the working directory
 WORKDIR /app
 
-# 1. Install system dependencies for Playwright/Chromium
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libnss3 \
-    libnspr4 \
-    libdbus-1-3 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libcups2 \
-    libdrm2 \
-    libxkbcommon0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxfixes3 \
-    libxrandr2 \
-    libgbm1 \
-    libasound2 \
-    && rm -rf /var/lib/apt/lists/*
-
-# 2. Install Python packages
+# Step 3: Copy requirements and install Python packages
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 3. Install the Playwright browser binaries
-RUN playwright install --with-deps chromium
-
-# 4. Copy ALL application files into the container
-# This is the key change. We now copy everything needed.
+# Step 4: Copy your application files (script, fonts, json)
+# We copy everything, but volumes will override settings.json and friends.json at runtime.
 COPY . .
 
-# 5. Expose the ports the application uses
+# Step 5: Expose the ports
 EXPOSE 8000
 EXPOSE 8765
 
-# 6. Command to run your application
-# Replace 'bot.py' with the actual name of your main python file
+# Step 6: Define the command to run your script
+# Replace 'your_script.py' with the actual name of your file
 CMD ["python3", "bot.py"]

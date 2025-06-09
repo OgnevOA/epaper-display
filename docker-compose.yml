@@ -2,17 +2,16 @@ version: '3.8'
 
 services:
   m5paper-server:
-    build: .
+    build: .  # Build the image from the Dockerfile in this directory
+    image: m5paper-server-image
     container_name: m5paper-server
     restart: unless-stopped
     ports:
       - "8000:8000"
       - "8765:8765"
     environment:
-      - SERVER_IP=192.168.1.231 # <-- Replace with your Pi's IP
+      - SERVER_IP=192.168.1.55
+      - TELEGRAM_TOKEN=YOUR_REAL_TOKEN_HERE
     volumes:
-      # Mount specific files that need to be persistent
       - ./settings.json:/app/settings.json
       - ./friends.json:/app/friends.json
-      - ./image.png:/app/image.png
-      - ./xkcd_next.png:/app/xkcd_next.png
