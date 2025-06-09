@@ -54,8 +54,11 @@ if not SERVER_IP:
 HTTP_PORT = 8000
 WS_PORT = 8765
 
-IMAGE_FILE = "image.png"   # The PNG served to M5Paper
-image_available = False    # True if we have a new image to serve
+APP_DIR = "/app" # The WORKDIR inside the Docker container
+IMAGE_FILENAME = "image.png"
+IMAGE_PATH = os.path.join(APP_DIR, IMAGE_FILENAME)   # Full path for saving/serving
+PRELOADED_XKCD_FILENAME = "xkcd_next.png"
+PRELOADED_XKCD_PATH = os.path.join(APP_DIR, PRELOADED_XKCD_FILENAME)
 
 # Modes – only one of friends_mode or xkcd_mode should be active.
 update_duration_minutes = 30  # default update interval
@@ -77,7 +80,7 @@ SETTINGS_FILE = os.path.join(SCRIPT_DIR, "settings.json")
 FRIENDS_QUOTES_FILE = os.path.join(SCRIPT_DIR, "friends.json")
 
 # New: XKCD preloading globals
-PRELOADED_XKCD_FILE = os.path.join(SCRIPT_DIR, "xkcd_next.png")
+PRELOADED_XKCD_PATH = os.path.join(SCRIPT_DIR, "xkcd_next.png")
 preloaded_xkcd_image_ready = False
 
 # Whitelist Configuration
@@ -357,10 +360,10 @@ def process_photo(image_data: bytes):
             y_offset = (960 - new_h) // 2 if new_h < 960 else 0
             final_img.paste(img, (0, y_offset))
 
-            final_img.save(IMAGE_FILE, "PNG", optimize=True, compress_level=9)
+            final_img.save(IMAGE_PATH, "PNG", optimize=True, compress_level=9)
 
         image_available = True
-        logger.info("Saved compressed photo -> %s, centered with y_offset=%d", IMAGE_FILE, y_offset)
+        logger.info("Saved compressed photo -> %s, centered with y_offset=%d", IMAGE_PATH, y_offset)
     except Exception as e:
         logger.error("Error in process_photo: %s", e)
 
@@ -489,7 +492,7 @@ def process_friends_quote():
         footer_y = img_height - footer_h - footer_margin
         draw.text((footer_x, footer_y), footer_text, font=font, fill=0)
         final_img = image.rotate(90, expand=True)
-        final_img.save(IMAGE_FILE, "PNG")
+        final_img.save(IMAGE_PATH, "PNG")
         image_available = True
         return True
     except Exception as e:
@@ -553,9 +556,9 @@ def preload_xkcd_comic():
         logger.info("Preloading XKCD comic %d, URL: %s", random_num, img_url)
         with urllib.request.urlopen(img_url) as response:
             img_data = response.read()
-        if pre_process_photo(img_data, PRELOADED_XKCD_FILE):
+        if pre_process_photo(img_data, PRELOADED_XKCD_PATH):
             preloaded_xkcd_image_ready = True
-            logger.info("Preloaded XKCD comic stored in %s", PRELOADED_XKCD_FILE)
+            logger.info("Preloaded XKCD comic stored in %s", PRELOADED_XKCD_PATH)
             return True
         else:
             return False
@@ -580,7 +583,7 @@ def process_xkcd_comic():
         logger.info("XKCD comic %d, URL: %s", random_num, img_url)
         with urllib.request.urlopen(img_url) as response:
             img_data = response.read()
-        return pre_process_photo(img_data, IMAGE_FILE)
+        return pre_process_photo(img_data, IMAGE_PATH)
     except Exception as e:
         logger.error("Error in process_xkcd_comic: %s", e)
         return False
@@ -726,8 +729,8 @@ async def xkcd_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
     try:
         import shutil
-        shutil.copyfile(PRELOADED_XKCD_FILE, IMAGE_FILE)
-        logger.info("Copied preloaded XKCD comic to IMAGE_FILE.")
+        shutil.copyfile(PRELOADED_XKCD_PATH, IMAGE_PATH)
+        logger.info("Copied preloaded XKCD comic to IMAGE_PATH.")
         preloaded_xkcd_image_ready = False
         loop.run_in_executor(None, preload_xkcd_comic)
     except Exception as e:
@@ -770,7 +773,7 @@ async def ws_handler(websocket, path=None):
                     if preloaded_xkcd_image_ready:
                         try:
                             import shutil
-                            shutil.copyfile(PRELOADED_XKCD_FILE, IMAGE_FILE)
+                            shutil.copyfile(PRELOADED_XKCD_PATH, IMAGE_PATH)
                             logger.info("Using preloaded XKCD comic.")
                             preloaded_xkcd_image_ready = False
                             asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
@@ -779,8 +782,8 @@ async def ws_handler(websocket, path=None):
                             process_xkcd_comic()
                     else:
                         process_xkcd_comic()
-                if os.path.exists(IMAGE_FILE):
-                    url = f"http://{SERVER_IP}:{HTTP_PORT}/{IMAGE_FILE}"
+                if os.path.exists(IMAGE_PATH):
+                    url = f"http://{SERVER_IP}:{HTTP_PORT}/{IMAGE_FILENAME}"
                     reply = f"update:{url}|{dur_str}"
                 else:
                     reply = f"no_update|{dur_str}"
@@ -795,20 +798,20 @@ async def start_ws_server():
     return server
 
 async def handle_image(request):
-    if os.path.exists(IMAGE_FILE):
+    if os.path.exists(IMAGE_PATH):
         logger.info("Serving image.png to %s", request.remote)
-        return web.FileResponse(IMAGE_FILE)
+        return web.FileResponse(IMAGE_PATH)
     else:
         return web.Response(status=404, text="Image not found")
 
 async def start_http_server():
     app = web.Application()
-    app.router.add_get(f"/{IMAGE_FILE}", handle_image)
+    app.router.add_get(f"/{IMAGE_PATH}", handle_image)
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, "0.0.0.0", HTTP_PORT)
     await site.start()
-    logger.info("HTTP server on port %d, serving /%s", HTTP_PORT, IMAGE_FILE)
+    logger.info("HTTP server on port %d, serving /%s", HTTP_PORT, IMAGE_PATH)
 
 
 # --------------------------------------------------------------------
