@@ -832,7 +832,7 @@ def run_telegram_bot():
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
     application.add_handler(CallbackQueryHandler(duration_callback))
     logger.info("Starting Telegram bot polling...")
-    loop.run_until_complete(application.run_polling())
+    loop.run_until_complete(application.run_polling(shutdown_signals=None))
 
 # --------------------------------------------------------------------
 # 8) Main Async Entry
