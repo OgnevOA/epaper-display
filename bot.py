@@ -451,6 +451,15 @@ def process_friends_quote():
         except Exception as e:
             logger.warning("Font not found, using default: %s", e)
             font = ImageFont.load_default()
+
+        # This helper function gets the bounding box of a piece of text
+        def get_text_bbox(text, font, draw):
+            # draw.textbbox((0, 0), text, font=font) returns (left, top, right, bottom)
+            bbox = draw.textbbox((0, 0), text, font=font)
+            width = bbox[2] - bbox[0]
+            height = bbox[3] - bbox[1]
+            return width, height
+
         def wrap_text(text, font, max_width, draw):
             words = text.split()
             if not words:
@@ -459,29 +468,36 @@ def process_friends_quote():
             current_line = words[0]
             for w2 in words[1:]:
                 test_line = current_line + " " + w2
-                if draw.textsize(test_line, font=font)[0] <= max_width:
+                # Use draw.textlength() for checking width
+                if draw.textlength(test_line, font=font) <= max_width:
                     current_line = test_line
                 else:
                     lines.append(current_line)
                     current_line = w2
             lines.append(current_line)
             return lines
+
         max_text_width = img_width - 60
-        line_height = draw.textsize("Ay", font=font)[1]
+        # Use the new helper to get line height
+        _, line_height = get_text_bbox("Ay", font, draw)
+
         wrapped_dialogue = []
         for line in dialogue_lines:
             w_lines = wrap_text(line, font, max_text_width, draw)
             wrapped_dialogue.extend(w_lines)
-        footer_w, footer_h = draw.textsize(footer_text, font=font)
+
+        footer_w, footer_h = get_text_bbox(footer_text, font, draw)
         dialogue_block_height = len(wrapped_dialogue) * line_height
         footer_margin = 20
         available_height = img_height - footer_h - footer_margin
         dialogue_y_start = (available_height - dialogue_block_height) / 2
+
         for line in wrapped_dialogue:
-            lw, _ = draw.textsize(line, font=font)
+            # Use draw.textlength() here as well
+            lw = draw.textlength(line, font=font)
             x = (img_width - lw) / 2
             draw.text((x, dialogue_y_start), line, font=font, fill=0)
-            dialogue_y_start += line_height
+            dialogue_y_start += (line_height + 4)  # Add a little extra line spacing
         footer_x = (img_width - footer_w) / 2
         footer_y = img_height - footer_h - footer_margin
         draw.text((footer_x, footer_y), footer_text, font=font, fill=0)
