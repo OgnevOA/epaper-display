@@ -51,7 +51,6 @@ if not SERVER_IP:
     # This will stop the script if the IP is not provided, preventing confusing errors later.
     raise ValueError("The SERVER_IP environment variable is not set!")
 
-
 HTTP_PORT = 8000
 WS_PORT = 8765
 
@@ -451,15 +450,6 @@ def process_friends_quote():
         except Exception as e:
             logger.warning("Font not found, using default: %s", e)
             font = ImageFont.load_default()
-
-        # This helper function gets the bounding box of a piece of text
-        def get_text_bbox(text, font, draw):
-            # draw.textbbox((0, 0), text, font=font) returns (left, top, right, bottom)
-            bbox = draw.textbbox((0, 0), text, font=font)
-            width = bbox[2] - bbox[0]
-            height = bbox[3] - bbox[1]
-            return width, height
-
         def wrap_text(text, font, max_width, draw):
             words = text.split()
             if not words:
@@ -468,36 +458,29 @@ def process_friends_quote():
             current_line = words[0]
             for w2 in words[1:]:
                 test_line = current_line + " " + w2
-                # Use draw.textlength() for checking width
-                if draw.textlength(test_line, font=font) <= max_width:
+                if draw.textsize(test_line, font=font)[0] <= max_width:
                     current_line = test_line
                 else:
                     lines.append(current_line)
                     current_line = w2
             lines.append(current_line)
             return lines
-
         max_text_width = img_width - 60
-        # Use the new helper to get line height
-        _, line_height = get_text_bbox("Ay", font, draw)
-
+        line_height = draw.textsize("Ay", font=font)[1]
         wrapped_dialogue = []
         for line in dialogue_lines:
             w_lines = wrap_text(line, font, max_text_width, draw)
             wrapped_dialogue.extend(w_lines)
-
-        footer_w, footer_h = get_text_bbox(footer_text, font, draw)
+        footer_w, footer_h = draw.textsize(footer_text, font=font)
         dialogue_block_height = len(wrapped_dialogue) * line_height
         footer_margin = 20
         available_height = img_height - footer_h - footer_margin
         dialogue_y_start = (available_height - dialogue_block_height) / 2
-
         for line in wrapped_dialogue:
-            # Use draw.textlength() here as well
-            lw = draw.textlength(line, font=font)
+            lw, _ = draw.textsize(line, font=font)
             x = (img_width - lw) / 2
             draw.text((x, dialogue_y_start), line, font=font, fill=0)
-            dialogue_y_start += (line_height + 4)  # Add a little extra line spacing
+            dialogue_y_start += line_height
         footer_x = (img_width - footer_w) / 2
         footer_y = img_height - footer_h - footer_margin
         draw.text((footer_x, footer_y), footer_text, font=font, fill=0)
@@ -826,68 +809,41 @@ async def start_http_server():
 # --------------------------------------------------------------------
 # 7) Telegram Bot Thread
 # --------------------------------------------------------------------
-# def run_telegram_bot():
-#     loop = asyncio.new_event_loop()
-#     asyncio.set_event_loop(loop)
-#     application = Application.builder().token(TELEGRAM_TOKEN).build()
-#     commands = [
-#         BotCommand("start", "Show welcome message"),
-#         BotCommand("help", "Show help message"),
-#         BotCommand("settings", "Set update interval"),
-#         BotCommand("friends", "Random Friends quote"),
-#         BotCommand("xkcd", "Random XKCD comic"),
-#     ]
-#     loop.run_until_complete(application.bot.set_my_commands(commands))
-#     application.add_handler(CommandHandler("start", start_command))
-#     application.add_handler(CommandHandler("help", help_command))
-#     application.add_handler(CommandHandler("chatid", chatid_command))
-#     application.add_handler(CommandHandler("settings", settings_command))
-#     application.add_handler(CommandHandler("friends", friends_command))
-#     application.add_handler(CommandHandler("xkcd", xkcd_command))
-#     application.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-#     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
-#     application.add_handler(CallbackQueryHandler(duration_callback))
-#     logger.info("Starting Telegram bot polling...")
-#     loop.run_until_complete(application.run_polling(shutdown_signals=None))
-
+def run_telegram_bot():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    application = Application.builder().token(TELEGRAM_TOKEN).build()
+    commands = [
+        BotCommand("start", "Show welcome message"),
+        BotCommand("help", "Show help message"),
+        BotCommand("settings", "Set update interval"),
+        BotCommand("friends", "Random Friends quote"),
+        BotCommand("xkcd", "Random XKCD comic"),
+    ]
+    loop.run_until_complete(application.bot.set_my_commands(commands))
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(CommandHandler("chatid", chatid_command))
+    application.add_handler(CommandHandler("settings", settings_command))
+    application.add_handler(CommandHandler("friends", friends_command))
+    application.add_handler(CommandHandler("xkcd", xkcd_command))
+    application.add_handler(MessageHandler(filters.PHOTO, photo_handler))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
+    application.add_handler(CallbackQueryHandler(duration_callback))
+    logger.info("Starting Telegram bot polling...")
+    loop.run_until_complete(application.run_polling())
 
 # --------------------------------------------------------------------
 # 8) Main Async Entry
 # --------------------------------------------------------------------
 async def main():
     load_settings()
-
-    # The modern v20+ way to drop pending updates is in the builder.
-    application = Application.builder().token(TELEGRAM_TOKEN).drop_pending_updates(True).build()
-
-    # Add all your handlers
-    application.add_handler(CommandHandler("start", start_command))
-    # ... (all your other handlers)
-    application.add_handler(CallbackQueryHandler(duration_callback))
-
-    try:
-        logger.info("Starting all services...")
-        await application.initialize()
-        await start_http_server()
-        await start_ws_server()
-        commands = [
-            BotCommand("start", "Show welcome message"),
-            # ... your other commands ...
-        ]
-        await application.bot.set_my_commands(commands)
-
-        # Start the application's internal tasks
-        await application.start()
-
-        logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
-        await asyncio.Event().wait()
-
-    finally:
-        logger.info("Shutting down application...")
-        if application.running:
-            await application.stop()
-        if application.initialized:
-            await application.shutdown()
+    await start_http_server()
+    await start_ws_server()
+    bot_thread = Thread(target=run_telegram_bot, daemon=True)
+    bot_thread.start()
+    logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
+    await asyncio.Event().wait()
 
 if __name__ == '__main__':
     try:
