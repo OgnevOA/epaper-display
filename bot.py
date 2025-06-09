@@ -54,11 +54,17 @@ if not SERVER_IP:
 HTTP_PORT = 8000
 WS_PORT = 8765
 
-APP_DIR = "/app" # The WORKDIR inside the Docker container
+APP_DIR = ""  # The WORKDIR inside the Docker container
 IMAGE_FILENAME = "image.png"
 IMAGE_PATH = os.path.join(APP_DIR, IMAGE_FILENAME)   # Full path for saving/serving
 PRELOADED_XKCD_FILENAME = "xkcd_next.png"
 PRELOADED_XKCD_PATH = os.path.join(APP_DIR, PRELOADED_XKCD_FILENAME)
+print('+++++++++PATHS++++++++++++')
+print('APP_DIR:', APP_DIR)
+print('IMAGE_FILENAME:', IMAGE_FILENAME)
+print('IMAGE_PATH:', IMAGE_PATH)
+print('PRELOADED_XKCD_FILENAME:', PRELOADED_XKCD_FILENAME)
+print('PRELOADED_XKCD_PATH:', PRELOADED_XKCD_PATH)
 
 # Modes – only one of friends_mode or xkcd_mode should be active.
 update_duration_minutes = 30  # default update interval

@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/playwright/python:v1.44.0-jammy
 
 # Step 2: Set the working directory
-WORKDIR /app
+WORKDIR /
 
 # Step 3: Copy requirements and install Python packages
 COPY requirements.txt .

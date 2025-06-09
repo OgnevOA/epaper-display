@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   m5paper-server:
@@ -13,5 +13,5 @@ services:
       - SERVER_IP=192.168.1.55
       - TELEGRAM_TOKEN=YOUR_REAL_TOKEN_HERE
     volumes:
-      - ./settings.json:/app/settings.json
-      - ./friends.json:/app/friends.json
+      - ./settings.json:/settings.json
+      - ./friends.json:/friends.json
