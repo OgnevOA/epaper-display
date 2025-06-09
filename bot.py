@@ -84,9 +84,6 @@ NIGHT_START_MINUTE = 30  # 30 minutes past the hour
 MORNING_WAKE_HOUR = 6  # 6 AM
 MORNING_WAKE_MINUTE = 30 # 30 minutes past the hour
 
-current_image_bytes = None   # Will hold the bytes of the image to be served
-preloaded_xkcd_bytes = None  # Will hold the bytes of the next preloaded XKCD
-
 def restricted(func):
     @wraps(func)
     async def wrapped(update: Update, context: ContextTypes.DEFAULT_TYPE, *args, **kwargs):
@@ -305,7 +302,7 @@ def split_text_and_emojis(line):
 # 3) Photo Processing
 # --------------------------------------------------------------------
 def process_photo(image_data: bytes):
-    global image_available, current_image_bytes
+    global image_available
     try:
         with Image.open(BytesIO(image_data)) as img:
             # --- START: NEW FIX FOR TRANSPARENCY ---
@@ -355,9 +352,7 @@ def process_photo(image_data: bytes):
             y_offset = (960 - new_h) // 2 if new_h < 960 else 0
             final_img.paste(img, (0, y_offset))
 
-            output_stream = BytesIO()
-            final_img.save(output_stream, "PNG", optimize=True, compress_level=9)
-            current_image_bytes = output_stream.getvalue()
+            final_img.save(IMAGE_FILE, "PNG", optimize=True, compress_level=9)
 
         image_available = True
         logger.info("Saved compressed photo -> %s, centered with y_offset=%d", IMAGE_FILE, y_offset)
@@ -420,7 +415,7 @@ async def process_text_browser(message_text: str):
 # 5) Friends Quotes Processing
 # --------------------------------------------------------------------
 def process_friends_quote():
-    global image_available, current_image_bytes
+    global image_available
     try:
         with open(FRIENDS_QUOTES_FILE, "r", encoding="utf-8") as f:
             quotes = json.load(f)
@@ -485,9 +480,7 @@ def process_friends_quote():
         footer_y = img_height - footer_h - footer_margin
         draw.text((footer_x, footer_y), footer_text, font=font, fill=0)
         final_img = image.rotate(90, expand=True)
-        output_stream = BytesIO()
-        final_img.save(output_stream, "PNG", optimize=True, compress_level=9)
-        current_image_bytes = output_stream.getvalue()
+        final_img.save(IMAGE_FILE, "PNG")
         image_available = True
         return True
     except Exception as e:
@@ -499,7 +492,6 @@ def process_friends_quote():
 # 6) XKCD Comic Processing - Preloading & Fallback
 # --------------------------------------------------------------------
 def pre_process_photo(image_data: bytes, output_file: str):
-    global preloaded_xkcd_bytes
     try:
         with Image.open(BytesIO(image_data)) as img:
             # This logic is identical to the main process_photo function now
@@ -527,19 +519,15 @@ def pre_process_photo(image_data: bytes, output_file: str):
             y_offset = (960 - new_h) // 2 if new_h < 960 else 0
             final_img.paste(img, (0, y_offset))
 
-            output_stream = BytesIO()
-            final_img.save(output_stream, "PNG", optimize=True, compress_level=9)
-            preloaded_xkcd_bytes = output_stream.getvalue()
+            final_img.save(output_file, "PNG", optimize=True, compress_level=9)
             logger.info("Preprocessed compressed XKCD image saved to %s", output_file)
         return True
     except Exception as e:
         logger.error("Error in pre_process_photo: %s", e)
         return False
 
-
 def preload_xkcd_comic():
     global preloaded_xkcd_image_ready
-    global preloaded_xkcd_bytes
     try:
         import urllib.request
         with urllib.request.urlopen("https://xkcd.com/info.0.json") as response:
@@ -717,25 +705,16 @@ async def friends_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @restricted
 async def xkcd_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global xkcd_mode, friends_mode, preloaded_xkcd_bytes, current_image_bytes, image_available
+    global xkcd_mode, friends_mode, preloaded_xkcd_image_ready
     xkcd_mode = True
     friends_mode = False
     save_settings()
     loop = asyncio.get_event_loop()
-    if not preloaded_xkcd_bytes:
+    if not preloaded_xkcd_image_ready:
         result = await loop.run_in_executor(None, preload_xkcd_comic)
         if not result:
             await update.message.reply_text("Failed to preload XKCD comic.")
             return
-    if preloaded_xkcd_bytes:
-        # Use the preloaded image
-        current_image_bytes = preloaded_xkcd_bytes
-        image_available = True
-        await update.message.reply_text("Random XKCD comic is ready!")
-
-        # Clear the preloaded cache and start preloading the *next* one in the background
-        preloaded_xkcd_bytes = None
-        asyncio.get_event_loop().run_in_executor(None, preload_xkcd_comic)
     try:
         import shutil
         shutil.copyfile(PRELOADED_XKCD_FILE, IMAGE_FILE)
@@ -779,21 +758,23 @@ async def ws_handler(websocket, path=None):
                 if friends_mode:
                     await asyncio.get_running_loop().run_in_executor(None, process_friends_quote)
                 elif xkcd_mode:
-                    if preloaded_xkcd_bytes:
-                        global current_image_bytes, image_available
-                        current_image_bytes = preloaded_xkcd_bytes
-                        image_available = True
-                        asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
-                    else:  # Fallback if nothing is preloaded
-                        await asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
-                if image_available:
-                    # The URL is now fixed since we defined the route
-                    url = f"http://{SERVER_IP}:{HTTP_PORT}/image.png"
+                    if preloaded_xkcd_image_ready:
+                        try:
+                            import shutil
+                            shutil.copyfile(PRELOADED_XKCD_FILE, IMAGE_FILE)
+                            logger.info("Using preloaded XKCD comic.")
+                            preloaded_xkcd_image_ready = False
+                            asyncio.get_running_loop().run_in_executor(None, preload_xkcd_comic)
+                        except Exception as e:
+                            logger.error("Error copying preloaded XKCD image: %s", e)
+                            process_xkcd_comic()
+                    else:
+                        process_xkcd_comic()
+                if os.path.exists(IMAGE_FILE):
+                    url = f"http://{SERVER_IP}:{HTTP_PORT}/{IMAGE_FILE}"
                     reply = f"update:{url}|{dur_str}"
-                    image_available = False  # CRITICAL: Reset the flag after notifying the device
                 else:
                     reply = f"no_update|{dur_str}"
-
                 await websocket.send(reply)
                 logger.info("WS sent: %s", reply)
     except websockets.ConnectionClosed:
@@ -805,17 +786,15 @@ async def start_ws_server():
     return server
 
 async def handle_image(request):
-    global current_image_bytes
-    if current_image_bytes:
-        logger.info("Serving image from memory to %s", request.remote)
-        return web.Response(body=current_image_bytes, content_type='image/png')
+    if os.path.exists(IMAGE_FILE):
+        logger.info("Serving image.png to %s", request.remote)
+        return web.FileResponse(IMAGE_FILE)
     else:
-        logger.warning("Image requested but not available in memory.")
-        return web.Response(status=404, text="Image not available")
+        return web.Response(status=404, text="Image not found")
 
 async def start_http_server():
     app = web.Application()
-    app.router.add_get("/image.png", handle_image)
+    app.router.add_get(f"/{IMAGE_FILE}", handle_image)
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, "0.0.0.0", HTTP_PORT)
@@ -825,48 +804,10 @@ async def start_http_server():
 # --------------------------------------------------------------------
 # 7) Telegram Bot Thread
 # --------------------------------------------------------------------
-# def run_telegram_bot():
-#     loop = asyncio.new_event_loop()
-#     asyncio.set_event_loop(loop)
-#     application = Application.builder().token(TELEGRAM_TOKEN).build()
-#     commands = [
-#         BotCommand("start", "Show welcome message"),
-#         BotCommand("help", "Show help message"),
-#         BotCommand("settings", "Set update interval"),
-#         BotCommand("friends", "Random Friends quote"),
-#         BotCommand("xkcd", "Random XKCD comic"),
-#     ]
-#     loop.run_until_complete(application.bot.set_my_commands(commands))
-#     application.add_handler(CommandHandler("start", start_command))
-#     application.add_handler(CommandHandler("help", help_command))
-#     application.add_handler(CommandHandler("chatid", chatid_command))
-#     application.add_handler(CommandHandler("settings", settings_command))
-#     application.add_handler(CommandHandler("friends", friends_command))
-#     application.add_handler(CommandHandler("xkcd", xkcd_command))
-#     application.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-#     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
-#     application.add_handler(CallbackQueryHandler(duration_callback))
-#     logger.info("Starting Telegram bot polling...")
-#     loop.run_until_complete(application.run_polling())
-
-# --------------------------------------------------------------------
-# 8) Main Async Entry
-# --------------------------------------------------------------------
-# async def main():
-#     load_settings()
-#     await start_http_server()
-#     await start_ws_server()
-#     bot_thread = Thread(target=run_telegram_bot, daemon=True)
-#     bot_thread.start()
-#     logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
-#     await asyncio.Event().wait()
-
-async def post_init(application: Application) -> None:
-    """
-    This function is called after the Application is built.
-    It sets the bot commands and starts the HTTP/WebSocket servers.
-    """
-    # Define the commands the bot will have
+def run_telegram_bot():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    application = Application.builder().token(TELEGRAM_TOKEN).build()
     commands = [
         BotCommand("start", "Show welcome message"),
         BotCommand("help", "Show help message"),
@@ -874,30 +815,7 @@ async def post_init(application: Application) -> None:
         BotCommand("friends", "Random Friends quote"),
         BotCommand("xkcd", "Random XKCD comic"),
     ]
-    # Set the commands for the bot
-    await application.bot.set_my_commands(commands)
-    logger.info("Successfully set bot commands.")
-
-    # Start the other servers as background tasks
-    await start_http_server()
-    await start_ws_server()
-    logger.info("HTTP and WebSocket servers are running in the background.")
-
-
-def main() -> None:
-    """Run the bot."""
-    load_settings()
-
-    # Create the Application and pass it the bot's token.
-    # The post_init hook will handle all async setup.
-    application = (
-        Application.builder()
-        .token(TELEGRAM_TOKEN)
-        .post_init(post_init)
-        .build()
-    )
-
-    # Register all your command and message handlers (this part is unchanged)
+    loop.run_until_complete(application.bot.set_my_commands(commands))
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("chatid", chatid_command))
@@ -907,18 +825,23 @@ def main() -> None:
     application.add_handler(MessageHandler(filters.PHOTO, photo_handler))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
     application.add_handler(CallbackQueryHandler(duration_callback))
-
-    # Run the bot until the user presses Ctrl-C
-    # This will create and manage the one and only event loop.
     logger.info("Starting Telegram bot polling...")
-    application.run_polling()
+    loop.run_until_complete(application.run_polling())
 
-    logger.info("Bot has been stopped.")
-
-
+# --------------------------------------------------------------------
+# 8) Main Async Entry
+# --------------------------------------------------------------------
+async def main():
+    load_settings()
+    await start_http_server()
+    await start_ws_server()
+    bot_thread = Thread(target=run_telegram_bot, daemon=True)
+    bot_thread.start()
+    logger.info("Server up. Listening for Telegram, WS, HTTP on 0.0.0.0.")
+    await asyncio.Event().wait()
 
 if __name__ == '__main__':
     try:
-        main()
+        asyncio.run(main())
     except KeyboardInterrupt:
         logger.info("Shutting down.")
